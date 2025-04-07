@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "627448491131",
+    "project_id": "lisa-it-b1e75",
+    "storage_bucket": "lisa-it-b1e75.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627448491131:android:0a4c0ac5054102692846de",
+        "android_client_info": {
+          "package_name": "com.jvdon.lisait"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAMlpCgEQIoB6Evu-G8WsiEzTqEhJN5zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
