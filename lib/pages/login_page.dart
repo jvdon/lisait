@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.center,
                 ),
                 Custominput(label: "e-mail", controller: email),
-                Custominput(label: "password", controller: password),
+                Custominput(label: "password", controller: password, isPassword: true),
                 IconButton(
                   icon: Text("LOGIN"),
                   onPressed: () async {

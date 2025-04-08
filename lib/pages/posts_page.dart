@@ -3,7 +3,9 @@ import 'package:lisait/models/post.dart';
 import 'package:lisait/models/user.dart';
 import 'package:lisait/pages/login_page.dart';
 import 'package:lisait/pages/post_page.dart';
+import 'package:lisait/pages/profile_page.dart';
 import 'package:lisait/repos/posts_repo.dart';
+import 'package:lisait/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PostsPage extends StatefulWidget {
@@ -22,7 +24,7 @@ class _PostsPageState extends State<PostsPage> {
   List<Post> shownPosts = [];
   // Todos os posts
   List<Post> posts = [];
-  
+
   bool loading = false;
   @override
   void initState() {
@@ -47,11 +49,12 @@ class _PostsPageState extends State<PostsPage> {
     setState(() {
       loading = true;
     });
+    //~ Espere 5 segundos para simular carregamento
     await Future.delayed(Duration(seconds: 5));
-    // Gera a quantidade de items a serem carregados (Padrão: 10)
+    //~ Gera a quantidade de items a serem carregados (Padrão: 10)
 
     int nextRangeEnd = (shownPosts.length + 10) > posts.length ? posts.length : shownPosts.length + 10;
-    // Insere os posts na lista e recarrega a pagina
+    //^ Insere os posts na lista e recarrega a pagina
     setState(() {
       shownPosts.addAll(posts.getRange(shownPosts.length, nextRangeEnd));
       loading = false;
@@ -65,6 +68,7 @@ class _PostsPageState extends State<PostsPage> {
         leading: MenuAnchor(
           controller: _menuController,
           child: IconButton(
+            color: Pallete.red,
             icon: CircleAvatar(
               foregroundImage: NetworkImage(widget.user.photo),
             ),
@@ -82,14 +86,17 @@ class _PostsPageState extends State<PostsPage> {
               child: Text("Profile"),
               onPressed: () {
                 // Navigate to profile page
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage(user: widget.user)));
               },
             ),
             TextButton(
               child: Text("Logout"),
               onPressed: () async {
+                //^ Remova o usuário do SharedPreferences
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.clear();
 
+                //! Navegue para tela de login
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
               },
             ),
@@ -110,7 +117,7 @@ class _PostsPageState extends State<PostsPage> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // Se a lista de posts está vazia comunique isso ao usuário 
+            //^ Se a lista de posts está vazia comunique isso ao usuário
             if (posts.isEmpty)
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +127,7 @@ class _PostsPageState extends State<PostsPage> {
                 ],
               )
             else
-              // Exibe os posts em lista vertical 
+              //^ Exibe os posts em lista vertical
               ListView.builder(
                 controller: _scrollController,
                 itemCount: shownPosts.length,
